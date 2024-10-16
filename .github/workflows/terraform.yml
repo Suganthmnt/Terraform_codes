@@ -1,7 +1,7 @@
 name: Terraform
 
 on:
-  workflow_dispatch:  # Allows manual triggering from the GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -15,9 +15,6 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
-
-    - name: List files in working directory
-      run: ls -R ./terraform  # Adjust if your .tf files are in a different directory
 
     - name: Terraform Init
       run: terraform init
