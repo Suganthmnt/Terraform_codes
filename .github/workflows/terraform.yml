@@ -1,9 +1,7 @@
 name: Terraform
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:  # Allows manual triggering from the GitHub Actions tab
 
 jobs:
   terraform:
@@ -20,12 +18,15 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      working-directory: ./module_pod  # Specify your working directory if needed
 
     - name: Terraform Plan
       run: terraform plan
+      working-directory: ./module_pod  # Specify your working directory if needed
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
+      working-directory: ./module_pod  # Specify your working directory if needed
       env:
         ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
