@@ -17,19 +17,25 @@ jobs:
         terraform_version: 1.0.0
 
     - name: List files in working directory
-      run: ls -R ./terraform  # List files to ensure .tf files are present
+      run: ls -R ./terraform  # Adjust if your .tf files are in a different directory
 
     - name: Terraform Init
       run: terraform init
-      working-directory: ./terraform  # Specify the correct path
+      working-directory: ./terraform
+
+    - name: Create or select workspace
+      run: terraform workspace select ${WORKSPACE_NAME} || terraform workspace new ${WORKSPACE_NAME}
+      working-directory: ./terraform
+      env:
+        WORKSPACE_NAME: dev  # Change this to your desired workspace name
 
     - name: Terraform Plan
       run: terraform plan
-      working-directory: ./terraform  # Specify the correct path
+      working-directory: ./terraform
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
-      working-directory: ./terraform  # Specify the correct path
+      working-directory: ./terraform
       env:
         ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
