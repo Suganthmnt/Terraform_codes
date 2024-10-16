@@ -16,17 +16,20 @@ jobs:
       with:
         terraform_version: 1.0.0
 
+    - name: List files in working directory
+      run: ls -R ./terraform  # List files to ensure .tf files are present
+
     - name: Terraform Init
       run: terraform init
-      working-directory: ./module_pod  # Specify your working directory if needed
+      working-directory: ./terraform  # Specify the correct path
 
     - name: Terraform Plan
       run: terraform plan
-      working-directory: ./module_pod  # Specify your working directory if needed
+      working-directory: ./terraform  # Specify the correct path
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
-      working-directory: ./module_pod  # Specify your working directory if needed
+      working-directory: ./terraform  # Specify the correct path
       env:
         ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
